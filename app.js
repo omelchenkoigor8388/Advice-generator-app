@@ -1,15 +1,18 @@
 const button = document.querySelector('.button');
-const advice = document.querySelector('.text');
+const adviceText = document.querySelector('.text');
+const adviceNumber = document.querySelector('.number');
 
-function getAdvice() {
+function updateAdvice() {
   fetch('https://api.adviceslip.com/advice')
     .then(response => response.json())
     .then(data => {
-      advice.innerText = `"${data.slip.advice}"`;
-    })
-    .catch(error => console.error(error));
+      const advice = data.slip.advice;
+      const adviceId = data.slip.slip_id;
+      adviceText.textContent = `"${advice}"`;
+      adviceNumber.textContent = adviceId;
+      const newNumber = Math.floor(Math.random() * 1000) + 1;
+      adviceNumber.textContent = newNumber;
+    });
 }
 
-button.addEventListener('click', getAdvice);
-
-
+button.addEventListener('click', updateAdvice);
